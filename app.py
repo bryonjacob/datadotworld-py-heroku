@@ -8,8 +8,9 @@ from flask import Flask
 from flask import request
 from flask import make_response
 
-config = Config()
+config = Config(config_file_path='./.dwconfig')
 config.auth_token = os.environ['DATADOTWORLD_TOKEN']
+config.save()
 dw = DataDotWorld(config=config)
 #print(dw.query('bryon/odin-2015-2016', 'SELECT * FROM Tables'))
 
