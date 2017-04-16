@@ -1,0 +1,10 @@
+{
+	"name": "datadotworld py heroku example",
+	"description": "datadotworld py heroku example",
+	"keywords": ["datadotworld", "python"],
+	"env": {
+		"DATADOTWORLD_TOKEN": {
+			"description": "Your data.world token from https://data.world/settings/advanced"
+		}
+	}
+}
