@@ -1,5 +1,6 @@
 import os
 import json
+import redis
 
 from datadotworld.config import Config
 from datadotworld.datadotworld import DataDotWorld
@@ -17,12 +18,25 @@ dw = DataDotWorld(config=config)
 
 app = Flask(__name__)
 
-@app.route('/<path:dataset>', methods=['GET'])
+r = redis.from_url(os.environ.get("REDIS_URL"))
+
+@app.route('/tables/<path:dataset>', methods=['GET'])
 def test(dataset):
     results = dw.query(dataset, 'SELECT * FROM Tables')
     response = make_response(json.dumps({'tables': [row['tableName'] for row in results.table]}, indent=4))
     response.headers['Content-Type'] = 'application/json'
     return response
+
+@app.route('/count', methods=['GET'])
+def count():
+    response = make_response(str(r.incr('counter', 1)))
+    response.headers['Content-Type'] = 'text/plain'
+    return response
+
+@app.errorhandler(Exception)
+def all_exception_handler(error):
+    print(error)
+    return error, 500
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 8000))

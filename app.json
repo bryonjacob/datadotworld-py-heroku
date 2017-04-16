@@ -2,6 +2,7 @@
 	"name": "datadotworld py heroku example",
 	"description": "datadotworld py heroku example",
 	"keywords": ["datadotworld", "python"],
+	"addons": ["heroku-redis:hobby-dev"],
 	"env": {
 		"DATADOTWORLD_TOKEN": {
 			"description": "Your data.world token from https://data.world/settings/advanced"
